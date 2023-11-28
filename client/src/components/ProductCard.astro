@@ -1,6 +1,5 @@
 ---
-const { product, prev, next } = Astro.props;
-import PrevNext from '../components/PrevNext.astro';
+const { product, showCategory = true } = Astro.props;
 import { Image } from 'astro:assets';
 
 ---
@@ -155,6 +154,7 @@ import { Image } from 'astro:assets';
 </style>
 
 <div class="wrapper">
+  <div transition:name={`product-${product.id}`}>
   <article class={product.attributes.rating > 4.5 ? 'popular' : ''}>
     <Image src={`${import.meta.env.STRAPI_URL}${
         product.attributes.image?.data.attributes.url
@@ -170,8 +170,16 @@ import { Image } from 'astro:assets';
     <p class="description">
       {product.attributes.description}
     </p>
+    {
+      showCategory && product.attributes.category && (
+        <p class="category">
+          <a href={`/category/${product.attributes.category.data.id}`}>
+            More {product.attributes.category.data.attributes.name}
+          </a>
+        </p>
+      )
+    }
     <p class="price">&euro; <span>{product.attributes.price}</span></p>
     <button>Buy now</button>
   </article>
 </div>
-<PrevNext prev={prev} next={next} path="products" />

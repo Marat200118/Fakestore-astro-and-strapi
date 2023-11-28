@@ -1,25 +1,14 @@
 ---
-import ProductCard from "../components/ProductCard.astro";
-const { title } = Astro.props;
+import ProductCard from "./ProductCard.astro";
 
-// const products = await fetch().then(r => r.json());
-import fetchApi from '../lib/strapi';
-
-const products = await fetchApi ({
-  endpoint: 'products',
-  wrappedByKey: 'data',
-  query: {
-    populate: '*',
-  }
-});
-
-console.log(products);
+const { products, showCategory } = Astro.props;
 ---
 
 <style>
   ul {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+
     grid-gap: var(--s4);
   }
 
@@ -27,27 +16,16 @@ console.log(products);
     text-decoration: none;
     color: inherit;
   }
-  li {
-    list-style: none;
-  }
 </style>
 
-<html>
-<head>
-  <title>Products</title>
-</head>
-<body>
-  <h1>Products List</h1>
-  <ul>
+<ul>
   {
     products.map((product) => (
-      <li>
+      <li data-category={product.attributes.category?.data.attributes.name}>
         <a href={`/products/${product.id}`}>
-          <ProductCard product={product} />
-        </a>  
+          <ProductCard product={product} showCategory={showCategory} />
+        </a>
       </li>
     ))
   }
-  </ul>
-</body>
-</html>
+</ul>

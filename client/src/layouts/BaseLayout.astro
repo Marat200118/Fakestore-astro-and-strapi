@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
 import Header from '../components/Header.astro';
 // import Footer from '../components/Footer.astro';
 import '../styles/reset.css';
@@ -18,6 +19,7 @@ const { pageTitle } = Astro.props;
       href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;800&display=swap"
       rel="stylesheet"
     />
+    <ViewTransitions />
   </head>
   <body>
     <Header />

@@ -8,6 +8,9 @@ export async function getStaticPaths() {
   const products = await fetchApi ({
     endpoint: 'products',
     wrappedByKey: 'data',
+    query: {
+      populate: '*'
+    }
   });
 
   return products.map((product,i) => ({
