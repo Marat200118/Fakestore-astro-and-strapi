@@ -1,0 +1,53 @@
+---
+import ProductCard from "../components/ProductCard.astro";
+const { title } = Astro.props;
+
+// const products = await fetch().then(r => r.json());
+import fetchApi from '../lib/strapi';
+
+const products = await fetchApi ({
+  endpoint: 'products',
+  wrappedByKey: 'data',
+  query: {
+    populate: '*',
+  }
+});
+
+console.log(products);
+---
+
+<style>
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    grid-gap: var(--s4);
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  li {
+    list-style: none;
+  }
+</style>
+
+<html>
+<head>
+  <title>Products</title>
+</head>
+<body>
+  <h1>Products List</h1>
+  <ul>
+  {
+    products.map((product) => (
+      <li>
+        <a href={`/products/${product.id}`}>
+          <ProductCard product={product} />
+        </a>  
+      </li>
+    ))
+  }
+  </ul>
+</body>
+</html>

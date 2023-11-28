@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import fetchApi from '../../lib/strapi';
+
+export async function getStaticPaths() {
+  // Fetch products data from the API
+  const products = await fetchApi ({
+    endpoint: 'products',
+    wrappedByKey: 'data',
+  });
+
+  return products.map((product,i) => ({
+    params: { id: product.id.toString() },
+    props: {
+      product,
+      next: i < products.length - 1 ? products[i + 1] : null,
+      prev: i > 0 ? products[i - 1] : null,
+    },
+  }));
+}
+
+const { product, next, prev } = Astro.props;
+---
+
+
+<BaseLayout>
+  <ProductCard product={product} prev={prev} next={next} />
+</BaseLayout>
