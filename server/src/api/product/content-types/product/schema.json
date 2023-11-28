@@ -16,7 +16,7 @@
       "type": "string"
     },
     "price": {
-      "type": "integer"
+      "type": "decimal"
     },
     "description": {
       "type": "text"
@@ -33,7 +33,7 @@
       ]
     },
     "rating": {
-      "type": "integer"
+      "type": "decimal"
     },
     "category": {
       "type": "relation",

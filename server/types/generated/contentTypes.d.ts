@@ -725,10 +725,10 @@ export interface ApiProductProduct extends Schema.CollectionType {
   };
   attributes: {
     title: Attribute.String;
-    price: Attribute.Integer;
+    price: Attribute.Decimal;
     description: Attribute.Text;
     image: Attribute.Media;
-    rating: Attribute.Integer;
+    rating: Attribute.Decimal;
     category: Attribute.Relation<
       'api::product.product',
       'oneToOne',
